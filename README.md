@@ -34,9 +34,14 @@ conda install -c conda-forge gcc=12.1.0
 ```
 pip install empy lark
 ```
+- Empty 환경에서도 만약 GPU Fan이 심하게 도는 경우, 아래 과정을 통해 UI rendering FPS를 낮춘다
+```
+메뉴바 Edit > Preferences > (UI 아래쪽에서) Preferences tab > Rendering > Throttle Rendering > UI FPS Limit > 30 정도로 낮춤
+```
 
 ## ROS2 연동 테스트 완료된 Isaac Sim 최종 작업 환경
-- Ubuntu 22.04
+- Ubuntu 22.04 + root python ver=3.10
+- Anaconda python ver=3.10 
 - ROS2 Humble
 - Isaac Sim 2022.2.1
 - NVIDIA-SMI, Driver Version 535.54.03 / CUDA Version: 12.2
