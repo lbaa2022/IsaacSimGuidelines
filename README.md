@@ -9,7 +9,8 @@
 | Isaac Sim 메뉴얼 | https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/overview.html |
 | Isaac Sim ROS workspace github | https://github.com/NVIDIA-Omniverse/IsaacSim-ros_workspaces |
 | ROS2 Humble page | https://docs.ros.org/en/humble/index.html |
-
+| Docker MoveIt2 설치 | https://moveit.picknik.ai/main/doc/how_to_guides/how_to_setup_docker_containers_in_ubuntu.html?highlight=docker |
+| MoveIt2 + Isaac Sim 연동 |  |
 
 ## 환경 설정 이슈 (Ubuntu 20.04 + Isaac Sim 2022.2.1 + ROS2 foxy)
 - Ubuntu 20.04 + ROS2 foxy 버전으로 테스트 중에 topic이 보이지 않고 메시지 전달이 되지 않는 등의 문제 발생 (동일 문제가 다른 사람에게도 발생함)
@@ -46,3 +47,20 @@ pip install empy lark
 - Isaac Sim 2022.2.1
 - NVIDIA-SMI, Driver Version 535.54.03 / CUDA Version: 12.2
 - ROS2 연동 테스트 예제 [Link](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/tutorial_ros2_manipulation.html)
+
+## MoveIt2 with isaac sim
+- PC에서 계속 설치 시도를 하였으나, 아래의 메시지와 함께 계속 컴파일 실패
+```
+CMake Error at /usr/share/cmake-3.22/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
+  Could NOT find Threads (missing: Threads_FOUND)
+Call Stack (most recent call first):
+```
+- Docker 기반 MoveIt2를 설치 및 활용하기로 결정
+- Docker용 nvidia-continer-toolkit을 설치하다가 Unable to locate packages 메시지와 함께 에러가 발생하는 경우, 아래의 명령어를 통해 해결
+```
+sudo wget https://nvidia.github.io/nvidia-docker/gpgkey --no-check-certificate
+sudo apt-key add gpgkey
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+sudo apt-get update
+```
