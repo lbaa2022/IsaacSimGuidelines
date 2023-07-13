@@ -10,7 +10,7 @@
 | Isaac Sim ROS workspace github | https://github.com/NVIDIA-Omniverse/IsaacSim-ros_workspaces |
 | ROS2 Humble page | https://docs.ros.org/en/humble/index.html |
 | Docker MoveIt2 설치 | https://moveit.picknik.ai/main/doc/how_to_guides/how_to_setup_docker_containers_in_ubuntu.html |
-| MoveIt2 + Isaac Sim 연동 | https://moveit.picknik.ai/main/doc/how_to_guides/how_to_setup_docker_containers_in_ubuntu.html |
+| MoveIt2 + Isaac Sim 연동 | https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/tutorial_ros2_moveit.html |
 | NVIDIA-CTK 설치 | https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html |
 
 ## 환경 설정 이슈 (Ubuntu 20.04 + Isaac Sim 2022.2.1 + ROS2 foxy)
