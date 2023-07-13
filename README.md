@@ -11,6 +11,7 @@
 | ROS2 Humble page | https://docs.ros.org/en/humble/index.html |
 | Docker MoveIt2 설치 | https://moveit.picknik.ai/main/doc/how_to_guides/how_to_setup_docker_containers_in_ubuntu.html?highlight=docker |
 | MoveIt2 + Isaac Sim 연동 |  |
+| NVIDIA-CTK 설치 | https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html |
 
 ## 환경 설정 이슈 (Ubuntu 20.04 + Isaac Sim 2022.2.1 + ROS2 foxy)
 - Ubuntu 20.04 + ROS2 foxy 버전으로 테스트 중에 topic이 보이지 않고 메시지 전달이 되지 않는 등의 문제 발생 (동일 문제가 다른 사람에게도 발생함)
