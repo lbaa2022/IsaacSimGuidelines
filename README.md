@@ -12,6 +12,8 @@
 | Docker MoveIt2 설치 | https://moveit.picknik.ai/main/doc/how_to_guides/how_to_setup_docker_containers_in_ubuntu.html |
 | MoveIt2 + Isaac Sim 연동 | https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/tutorial_ros2_moveit.html |
 | NVIDIA-CTK 설치 | https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html |
+| Moveit2_tutorial github | https://github.com/ros-planning/moveit2_tutorials |
+| Topic based ROS2 control github | https://github.com/PickNikRobotics/topic_based_ros2_control/tree/main |
 
 ## 환경 설정 이슈 (Ubuntu 20.04 + Isaac Sim 2022.2.1 + ROS2 foxy)
 - Ubuntu 20.04 + ROS2 foxy 버전으로 테스트 중에 topic이 보이지 않고 메시지 전달이 되지 않는 등의 문제 발생 (동일 문제가 다른 사람에게도 발생함)
@@ -50,18 +52,30 @@ pip install empy lark
 - ROS2 연동 테스트 예제 [Link](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/tutorial_ros2_manipulation.html)
 
 ## MoveIt2 with isaac sim
-- PC에서 계속 설치 시도를 하였으나, 아래의 메시지와 함께 계속 컴파일 실패
+### 공식 제공되는 도커는 아래의 에러들이 발생
+- Rviz 화면 렌더링이 안됨 --> mesa 업데이트 코드를 DockerFile에 추가해서 빌드하면 해결됨
+- Interactive Marker가 안뜸
+- Planner가 로드 안됨
+- 결과적으로 topic 메시지 기반 제어 불가능
+
+### 소스 빌드를 통해 Moveit2 + isaac sim 연동 모듈 설치
+- ROS2 humble 버전은 binary 설치
+- topic based ros2 control 모듈도 binary 설치
+- moveit2_tutorial을 clone하여 vcs import ~~~ 를 하면 moveit2등 관련 소스가 클론 됨
+- 이 상태에서 빌드 후 예제 실행
+
+### Troubleshooting
+- 상기 방법으로 moveit2_tutorial을 설치하면 cmake 컴파일 에러가 발생하는데, 아래의 방법으로 해결
 ```
 CMake Error at /usr/share/cmake-3.22/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
   Could NOT find Threads (missing: Threads_FOUND)
 Call Stack (most recent call first):
 ```
-- Docker 기반 MoveIt2를 설치 및 활용하기로 결정
-- Docker용 nvidia-continer-toolkit을 설치하다가 Unable to locate packages 메시지와 함께 에러가 발생하는 경우, 아래의 명령어를 통해 해결
+- 상기 에러가 발생한 경우, 해당 CMakeLists.txt 파일의 상단에 아래의 코드를 추가해주면 해결됨
 ```
-sudo wget https://nvidia.github.io/nvidia-docker/gpgkey --no-check-certificate
-sudo apt-key add gpgkey
-distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-sudo apt-get update
+set(CMAKE_THREAD_LIBS_INIT "-lpthread")
+set(CMAKE_HAVE_THREADS_LIBRARY 1)
+set(CMAKE_USE_WIN32_THREADS_INIT 0)
+set(CMAKE_USE_PTHREADS_INIT 1)
+set(THREADS_PREFER_PTHREAD_FLAG ON)
 ```
